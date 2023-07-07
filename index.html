@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>숫자야구</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="common.js" defer></script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="input">
+      <input type="number" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="test">
+      <input type="number" pattern="[0-9]*" inputmode="numeric" maxlength="1">
+      <input type="number" pattern="[0-9]*" inputmode="numeric" maxlength="1">
+      <button type="button" class="btn">확인</button>
+    </div>
+    <ul class="items"></ul>
+  </div>
+</body>
+</html>
