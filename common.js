@@ -33,6 +33,7 @@ function resetGame() {
   resetArray(inputValueArr);
   resetArray(randomNumberArr);
   randomNumber(randomNumberArr, randomNumberOfDigits);
+  inputs[0].focus();
 }
 
 function randomNumber(array, num) {
@@ -74,6 +75,7 @@ function creatItem(value, result) {
 }
 
 randomNumber(randomNumberArr, randomNumberOfDigits);
+inputs[0].focus();
 
 inputs.forEach((input) => {
   input.addEventListener('input', () => {
@@ -93,10 +95,20 @@ btn.addEventListener('click', () => {
     inputValueArr.push(input.value === '' ? input.value : Number(input.value));
   });
 
-  if (inputValueArr.indexOf('') > -1) return alert('숫자를 채워주세요');
+  if (inputValueArr.indexOf('') > -1) {
+    alert('숫자를 채워주세요');
+    for (let i = 0; i < inputs.length; i++) {
+      if(!inputs[i].value) return inputs[i].focus();
+    }
+    return;
+  }
 
   duplicationCheck(inputValueArr);
-  if (gameInfo.duplicationResult) return alert('중복된 숫자를 제거해주세요');
+  if (gameInfo.duplicationResult) {
+    alert('중복된 숫자를 제거해주세요');
+    inputs[0].focus();
+    return;
+  } 
 
   gameInfo.result = {
     strike: 0,
@@ -107,6 +119,11 @@ btn.addEventListener('click', () => {
 
   creatItem(inputValueArr, `${gameInfo.result.strike} STRIKE / ${gameInfo.result.ball} BALL / ${gameInfo.result.out} OUT`);
   gameInfo.count--;
+
+  inputs.forEach((input) => {
+    input.value = '';
+  });
+  inputs[0].focus();
 
   if (gameInfo.result.strike === randomNumberOfDigits) {
     alert('모든 숫자를 맞히는데 성공했어요!');
