@@ -8,25 +8,29 @@ const popupInfo = {
   explain: {
     title: '게임 설명',
     desc: '랜덤으로 생성된 3자리 숫자를 맞춰보세요.\n중복된 숫자는 없어요.\n숫자가 일치하지 않으면 OUT,\n숫자는 일치하지만 자리는 일치하지 않으면 BALL,\n숫자와 자리가 일치하면 STRIKE 예요.\n단서를 보고 숫자를 맞춰나가보세요.\n기회는 총 10번이예요!',
-    result : false,
+    result: false,
   },
-  restart: {
+  fail: {
     desc: '기회를 모두 소진했어요.\n재시작할까요?',
-    result : false,
+    result: false,
   },
   filledNumbers: {
     desc: '숫자를 채워주세요',
-    result : false,
+    result: false,
   },
   duplicateNumbers: {
     desc: '중복된 숫자를 제거해주세요',
-    result : false,
+    result: false,
   },
   success: {
     desc: '모든 숫자를 맞히는데 성공했어요!\n재시작할까요?',
-    result : false,
-  }
-}
+    result: false,
+  },
+  restart: {
+    desc: '재시작할까요?',
+    result: false,
+  },
+};
 const gameInfo = {
   count: 10,
   duplicationResult: false,
@@ -34,6 +38,7 @@ const gameInfo = {
     strike: 0,
     ball: 0,
     out: 0,
+    homerun: 0,
   },
 };
 
@@ -53,6 +58,7 @@ function resetGame() {
     strike: 0,
     ball: 0,
     out: 0,
+    homerun: 0,
   };
   btn.textContent = '확인';
   resetArray(inputValueArr);
@@ -89,10 +95,10 @@ function matchArr(array1, array2) {
 }
 
 function popupButtonsClick(e, popupInfo) {
-  if(e.target.classList.contains('popup-contents')) return e.currentTarget.remove();
-  if(e.target.tagName !== 'BUTTON') return;
+  if (e.target.classList.contains('popup-contents')) return e.currentTarget.remove();
+  if (e.target.tagName !== 'BUTTON') return;
   e.currentTarget.remove();
-  e.target.dataset.type === 'cancel' ? popupInfo.result = false : popupInfo.result = true;
+  e.target.dataset.type === 'cancel' ? (popupInfo.result = false) : (popupInfo.result = true);
   if (popupInfo.result) return resetGame();
 }
 
@@ -137,9 +143,9 @@ inputs.forEach((input) => {
 });
 
 btn.addEventListener('click', () => {
-  if(items.querySelector('li') && items.querySelector('li:last-child .result').textContent === `${randomNumberOfDigits} HOMERUN`) return createPopup('confirm',  popupInfo.success);
-  
-  if (!gameInfo.count) return createPopup('confirm', popupInfo.restart);
+  if (gameInfo.result.homerun === randomNumberOfDigits) return createPopup('confirm', popupInfo.restart);
+
+  if (!gameInfo.count) return createPopup('confirm', popupInfo.fail);
 
   resetArray(inputValueArr);
   inputs.forEach((input) => {
@@ -156,7 +162,7 @@ btn.addEventListener('click', () => {
 
   duplicationCheck(inputValueArr);
   if (gameInfo.duplicationResult) {
-    createPopup('alert',  popupInfo.duplicateNumbers);
+    createPopup('alert', popupInfo.duplicateNumbers);
     inputs[0].focus();
     return;
   }
@@ -169,10 +175,11 @@ btn.addEventListener('click', () => {
   matchArr(randomNumberArr, inputValueArr);
 
   if (gameInfo.result.strike === randomNumberOfDigits) {
-    if(items.querySelector('li:last-child .result').textContent != `${randomNumberOfDigits} HOMERUN`) {
-      creatItem(inputValueArr, `${randomNumberOfDigits} HOMERUN`);
+    if (gameInfo.result.homerun != randomNumberOfDigits) {
+      gameInfo.result.homerun = randomNumberOfDigits;
+      creatItem(inputValueArr, `${gameInfo.result.homerun} HOMERUN`);
     }
-    createPopup('confirm',  popupInfo.success);
+    createPopup('confirm', popupInfo.success);
     inputs.forEach((input) => {
       input.disabled = true;
     });
