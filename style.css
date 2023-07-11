@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -24,7 +26,9 @@ body {
   align-items: center;
   min-width: 700px;
 }
-ul, ol, li {
+ul,
+ol,
+li {
   list-style: none;
 }
 input {
@@ -32,21 +36,36 @@ input {
   appearance: none;
   border: 1px solid #d9d9d9;
 }
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 input:focus {
   border-color: #042b53;
   outline: 1px solid #042b53;
 }
+input:disabled {
+  background-color: #f1f1f1 !important;
+  opacity: 0.6;
+}
 button {
   border: 0;
   cursor: pointer;
+}
+
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
 }
 
 .wrap {
@@ -55,6 +74,11 @@ button {
   border-radius: 3rem;
   padding: 3rem;
   background-color: #fff;
+}
+.wrap .title {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .input {
@@ -73,7 +97,7 @@ button {
   background-color: #fff;
 }
 
-.input button {
+.btn-primary {
   height: 3rem;
   padding: 0 1rem;
   border-radius: 0.25rem;
@@ -81,6 +105,15 @@ button {
   font-size: 1rem;
   color: #042b53;
 }
+.btn-secondary {
+  height: 3rem;
+  padding: 0 1rem;
+  border-radius: 0.25rem;
+  background-color: #f1f1f1;
+  font-size: 1rem;
+  color: #788da5;
+}
+
 .items:not(:empty) {
   margin-top: 1rem;
 }
@@ -100,4 +133,47 @@ button {
   font-size: 1rem;
   font-weight: bold;
   color: #002851;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.popup-contents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.popup-inner {
+  width: 28rem;
+  border-radius: 3rem;
+  padding: 3rem;
+  background-color: #fff;
+}
+.popup-header {
+  margin-top: -1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+.popup-header .title {
+  text-align: center;
+  font-size: 1.2rem;
+}
+.popup-main {
+  padding: 1.5rem 0;
+  text-align: center;
+  white-space: pre-line;
+}
+.popup-footer {
+  display: flex;
+  gap: 1rem;
+}
+.popup-footer > button {
+  flex: 1 0 0;
 }
